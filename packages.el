@@ -12,8 +12,41 @@
 ;;; License: GPLv3
 
 (defconst fennel-packages
-  '(fennel-mode)
+  '(fennel-mode
+
+    ;; GNU Global with ivy completion; deprecated in favor or global-tags.el
+    counsel-gtags
+
+    ;; Show function arglist or variable docstring in echo area
+    ;; eldoc
+
+    evil-cleverparens
+    ggtags
+    helm-gtags
+    )
   "The list of Lisp packages required by the fennel layer.")
+
+(defun fennel/post-init-counsel-gtags ()
+  (spacemacs/counsel-gtags-define-keys-for-mode 'fennel-mode))
+
+;; (defun fennel/post-init-eldoc ()
+;;   (add-hook #'fennel-mode-hook #'eldoc-mode)
+;;   (add-hook #'fennel-repl-mode-hook #'eldoc-mode)
+;;   (add-hook #'fennel-interaction-mode-hook #'eldoc-mode))
+
+(defun fennel/pre-init-evil-cleverparens ()
+  (spacemacs|use-package-add-hook evil-cleverparens
+    :pre-init
+    (add-to-list 'evil-lisp-safe-structural-editing-modes 'fennel-mode)))
+
+(defun fennel/post-init-ggtags ()
+  (add-hook 'fennel-mode-local-vars-hook #'spacemacs/ggtags-mode-enable))
+
+(defun fennel/post-init-counsel-gtags ()
+  (spacemacs/counsel-gtags-define-keys-for-mode 'fennel-mode))
+
+(defun fennel/post-init-helm-gtags ()
+  (spacemacs/helm-gtags-define-keys-for-mode 'fennel-mode))
 
 ;; work around slime bug: https://gitlab.com/technomancy/fennel-mode/issues/3
 (defun fennel-mode-disable-slime ()

@@ -12,10 +12,7 @@
 ;;; License: GPLv3
 
 (defconst fennel-packages
-  '(fennel-mode
-    lisp-mode
-    inf-lisp
-    etags)
+  '(fennel-mode)
   "The list of Lisp packages required by the fennel layer.")
 
 ;; work around slime bug: https://gitlab.com/technomancy/fennel-mode/issues/3
